@@ -27,6 +27,8 @@ const DB = {
     await db.collection('users').doc(uid).set({
       name: data.name,
       email: data.email,
+      phone: data.phone || '',
+      upiId: data.upiId || '',
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
   },
@@ -34,6 +36,20 @@ const DB = {
   async getUser(uid) {
     const doc = await db.collection('users').doc(uid).get();
     return doc.exists ? { id: doc.id, ...doc.data() } : null;
+  },
+
+  async getUserByEmail(email) {
+    const snap = await db.collection('users').where('email', '==', email).limit(1).get();
+    return !snap.empty ? { id: snap.docs[0].id, ...snap.docs[0].data() } : null;
+  },
+
+  async updateUser(uid, data) {
+    await db.collection('users').doc(uid).set({
+      name: data.name,
+      phone: data.phone || '',
+      upiId: data.upiId || '',
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
   },
 
   /* ---------- Groups ---------- */
@@ -61,25 +77,64 @@ const DB = {
     // If we have a pendingPhone, let's find the placeholder member and upgrade it
     let updated = false;
     if (pendingPhone) {
-      const matchIndex = members.findIndex(m => m.phone && m.phone.replace(/[^0-9]/g, '') === pendingPhone);
+      const matchIndex = members.findIndex(m => {
+        if (!m.phone) return false;
+        let dbPhone = m.phone.replace(/[^0-9]/g, '');
+        if (dbPhone.length === 10) dbPhone = '91' + dbPhone;
+        return dbPhone === pendingPhone.replace(/[^0-9]/g, '');
+      });
+      
       if (matchIndex !== -1) {
+        // Fetch user doc to get their UPI ID if they have one
+        let userDocData = {};
+        try {
+          // Use userEmail since we don't have uid here (though we could pass it)
+          // Actually, we can just fetch via email if we indexed it, or better, pass the uid to this function.
+          // Let's assume we can fetch by searching for the email or that it's okay to just use what we have in sessionStorage.
+          const userSnap = await db.collection('users').where('email', '==', userEmail).get();
+          if (!userSnap.empty) {
+            userDocData = userSnap.docs[0].data();
+          }
+        } catch(e) {}
+
         // Upgrade the pending member
         members[matchIndex].email = userEmail;
+        members[matchIndex].name = userName; 
+        members[matchIndex].upiId = userDocData.upiId || ''; // Copy their UPI ID
         members[matchIndex].status = 'Joined';
-        
-        // Optionally update name if they prefer their Auth name, but creator's name for them might be fine.
-        // members[matchIndex].name = userName; 
         updated = true;
       }
     }
     
+    // STRICT SECURITY
     if (!updated) {
-      // If no match found or no pendingPhone was present, just add them freshly
-      members.push({ name: userName, email: userEmail, status: 'Joined' });
+      throw new Error("Unauthorized Access: You have not been specifically invited to this group.");
     }
 
     await groupRef.update({ members });
     return true;
+  },
+  
+  async manualJoinGroup(groupId, userEmail, userName, upiId) {
+    const groupRef = db.collection('groups').doc(groupId);
+    const doc = await groupRef.get();
+    if (!doc.exists) throw new Error("Group not found. Check the ID again.");
+    
+    const data = doc.data();
+    const members = data.members || [];
+    
+    if (members.find(m => m.email === userEmail)) throw new Error("You are already a member of this group.");
+    
+    // Add new member
+    members.push({
+      name: userName,
+      email: userEmail,
+      upiId: upiId || '',
+      status: 'Joined'
+    });
+    
+    await groupRef.update({ members });
+    return { id: doc.id, name: data.name };
   },
 
   async getGroupsForUser(email) {

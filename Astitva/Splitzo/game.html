@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Split the Bill - Puzzle Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game.css">
+</head>
+
+<body>
+
+  <div class="app-layout">
+
+    <!-- LEFT SIDE: Dashboard -->
+    <div class="dashboard">
+      <div class="dashboard-card shadow">
+        <h1>Split the Bill</h1>
+        <p class="subtitle mt-10">Drop the expense blocks into the right slots to perfectly balance the total bills!</p>
+
+        <div class="stats mt-20">
+          <div class="stat-box shadow-sm">
+            <span>Target per Friend</span>
+            <strong id="target-amount" class="text-accent">₹300</strong>
+          </div>
+          <div class="stat-box shadow-sm mt-10">
+            <span>Expenses Left</span>
+            <strong id="blocks-left">0</strong>
+          </div>
+        </div>
+
+        <button id="btn-start" class="btn btn-primary mt-20">Start Level 1</button>
+        <div id="game-message" class="message-card mt-10 shadow-sm" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- CENTER: Game Board -->
+    <div class="game-area">
+      <div class="isometric-wrapper">
+        <div id="game-board" class="board shadow-lg">
+          <!-- Column dividers -->
+          <div class="board-col" style="left: 0;"></div>
+          <div class="board-col" style="left: 25%;"></div>
+          <div class="board-col" style="left: 50%;"></div>
+          <div class="board-col" style="left: 75%;"></div>
+
+          <!-- Blocks will be injected here via JS -->
+          <div id="blocks-container"></div>
+        </div>
+      </div>
+
+      <!-- Avatars Line -->
+      <div id="avatars-container" class="avatars-container">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Mobile Controls (hidden on large screens if using keyboard) -->
+      <div class="mobile-controls mt-20">
+        <button id="btn-left" class="control-btn shadow">←</button>
+        <button id="btn-drop" class="control-btn shadow">⏬ Drop</button>
+        <button id="btn-right" class="control-btn shadow">→</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+
+</html>

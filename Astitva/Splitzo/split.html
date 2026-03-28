@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Split Module</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="split.css">
+</head>
+<body>
+
+  <!-- Background Animated Layer -->
+  <div class="bg-animation"></div>
+
+  <div class="container fade-in">
+    <header class="header flex-between">
+      <h1>Split Master</h1>
+      <div style="display:flex; gap: 8px;">
+        <button id="shareModule" class="btn btn-success icon-btn" title="Share with Friends">📢</button>
+        <button id="themeToggle" class="btn icon-btn" title="Toggle Dark/Light Mode">🌙</button>
+      </div>
+    </header>
+
+    <div class="grid-main">
+      <!-- Left Column: Inputs -->
+      <div class="left-col">
+        
+        <!-- Add Participant Section -->
+        <section class="card fade-up" style="animation-delay: 0.1s;">
+          <h2>👥 Participants</h2>
+          <form id="addParticipantForm" class="flex-row">
+            <input type="text" id="participantName" placeholder="Enter name (e.g., Alice)" required autocomplete="off">
+            <input type="text" id="participantUpi" placeholder="UPI ID (optional)" autocomplete="off">
+            <button type="submit" class="btn">Add</button>
+          </form>
+          <div class="chips-container mt-10" id="participantsList">
+            <!-- Participant chips rendered here -->
+          </div>
+        </section>
+
+        <!-- Add Expense Section -->
+        <section class="card fade-up" style="animation-delay: 0.2s;">
+          <h2>💸 Add Expense</h2>
+          <form id="addExpenseForm" class="flex-col">
+            <div class="form-group">
+              <label for="expenseDesc">Description</label>
+              <input type="text" id="expenseDesc" placeholder="e.g., Dinner at Mario's" required autocomplete="off">
+            </div>
+            
+            <div class="form-group flex-row">
+              <div class="flex-grow">
+                <label for="expenseAmount">Total Amount (₹)</label>
+                <input type="number" id="expenseAmount" placeholder="0.00" min="0" step="0.01" required>
+              </div>
+              <div class="flex-grow">
+                <label for="expensePaidBy">Paid By</label>
+                <select id="expensePaidBy" required>
+                  <option value="" disabled selected>Select...</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="expenseSplitMethod">Split Method</label>
+              <select id="expenseSplitMethod" required>
+                <option value="EQUAL">Equal Split</option>
+                <option value="PERCENTAGE">Percentage (%)</option>
+                <option value="CUSTOM">Custom Exact Amount</option>
+                <option value="SHARED">Shared By Specific People</option>
+              </select>
+            </div>
+
+            <!-- Dynamic Section for Splits -->
+            <div id="dynamicSplitParams" class="dynamic-inputs mt-10">
+              <!-- Rendered via JS based on selected Split Method -->
+            </div>
+
+            <button type="submit" class="btn mt-10" id="addExpenseBtn" disabled>Add Expense</button>
+          </form>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Dashboard & Expenses -->
+      <div class="right-col">
+        
+        <!-- Dashboard / Settlement Section -->
+        <section class="card alert-card fade-up" style="animation-delay: 0.3s;">
+          <h2 id="dashboardTitle">📊 Settlements Dashboard</h2>
+          <p class="subtitle" id="dashboardSubtitle">Who owes whom? Optimized to reduce transactions.</p>
+          <div id="settlementsList" class="mt-10">
+            <div class="empty-state">Add expenses to see settlements.</div>
+          </div>
+        </section>
+
+        <!-- Expense History -->
+        <section class="card fade-up mt-20" style="animation-delay: 0.4s;">
+          <div class="flex-between">
+            <h2>📜 Expense History</h2>
+            <div class="total-badge">Total Tracks: ₹<span id="grandTotalLabel" class="animated-number">0</span></div>
+          </div>
+          <div id="expensesList" class="expenses-container mt-10">
+            <div class="empty-state">No expenses tracked yet.</div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="split.js" defer></script>
+</body>
+</html>
