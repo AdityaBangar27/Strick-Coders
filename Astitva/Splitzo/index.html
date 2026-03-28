@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Splitzo — Split Expenses Smartly With Friends</title>
+  <meta name="description" content="Splitzo is a modern group expense manager. Split bills, manage shared costs, and settle debts with zero confusion." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💸</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER / NAVBAR
+       ═══════════════════════════════════════════ -->
+  <header class="header" id="main-header">
+    <div class="container">
+      <a href="#" class="logo" id="logo-link">
+        <div class="logo-icon">S</div>
+        <span>Splitzo</span>
+      </a>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="#" data-nav="home" class="active">Home</a>
+        <a href="#features" data-nav="features">Features</a>
+        <a href="#contact" data-nav="contact">Contact</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+
+        <div class="profile-wrapper" id="profile-wrapper">
+          <button class="profile-btn" id="profile-btn" aria-label="Profile menu">
+            <span id="profile-initial">👤</span>
+          </button>
+          <div class="profile-dropdown" id="profile-dropdown">
+            <!-- Logged-out state -->
+            <div id="dropdown-logged-out">
+              <a href="#" id="show-login-btn">🔑&nbsp; Login</a>
+              <a href="#" id="show-register-btn">📝&nbsp; Register</a>
+            </div>
+            <!-- Logged-in state -->
+            <div id="dropdown-logged-in" class="hidden">
+              <div style="padding:14px 18px;font-weight:700;font-size:.938rem;" id="dropdown-user-name">User</div>
+              <div class="divider"></div>
+              <a href="#" id="nav-my-groups">📂&nbsp; My Groups</a>
+              <a href="#" id="nav-member-dashboard">📊&nbsp; Dashboard</a>
+              <div class="divider"></div>
+              <button id="logout-btn">🚪&nbsp; Logout</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       TOAST CONTAINER
+       ═══════════════════════════════════════════ -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: LANDING
+       ═══════════════════════════════════════════ -->
+  <main class="page active" id="page-landing">
+
+    <!-- Hero -->
+    <section class="hero" id="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">🚀 Smart Expense Manager</div>
+          <h1>Split expenses <span class="gradient-text">smartly</span> with friends</h1>
+          <p>Manage shared costs easily with fair splits and zero confusion. Perfect for students, roommates, and travel groups.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" id="hero-get-started">Get Started</button>
+            <button class="btn btn-secondary btn-lg" id="hero-create-group">Create Group</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="assets/hero-illustration.png" alt="Friends splitting expenses together" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">✨ Features</div>
+          <h2>Everything you need to split expenses</h2>
+          <p>Powerful tools designed to make group expenses simple, transparent, and stress-free.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Group Management</h3>
+            <p>Create groups for trips, roommates, events, or any shared expense scenario. Invite members with ease.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Flexible Expense Splitting</h3>
+            <p>Split equally, by percentage, shares, or even item-wise. Complete flexibility for every situation.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💱</div>
+            <h3>Multi-Currency Support</h3>
+            <p>Travel internationally? Splitzo handles multiple currencies with automatic conversion.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔄</div>
+            <h3>Debt Simplification</h3>
+            <p>Minimize transactions with smart debt simplification. Pay fewer people, settle faster.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📅</div>
+            <h3>Recurring Expenses</h3>
+            <p>Set up monthly rent, subscriptions, or any recurring shared cost automatically.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Personal Dashboard</h3>
+            <p>Track your overall spending, balances, and history across all groups in one place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">📬 Contact</div>
+          <h2>Get in touch with us</h2>
+          <p>Have a question, feedback, or suggestion? We'd love to hear from you.</p>
+        </div>
+        <div class="contact-wrapper">
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input type="text" class="form-control" id="contact-name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" class="form-control" id="contact-email" name="email" placeholder="you@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea class="form-control" id="contact-message" name="message" rows="5" placeholder="Write your message here…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="logo" style="justify-content:center;margin-bottom:14px;">
+          <div class="logo-icon">S</div>
+          <span>Splitzo</span>
+        </div>
+        <p>&copy; 2026 Splitzo. Built for smarter group expenses.</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: DASHBOARD (MY GROUPS)
+       ═══════════════════════════════════════════ -->
+  <main class="page" id="page-dashboard">
+    <div class="container">
+      <div class="dashboard-header">
+        <h1>Welcome, <span id="dashboard-user-name">User</span> <span class="welcome-emoji">👋</span></h1>
+        <button class="btn btn-primary" id="btn-open-create-group">
+          <span>+</span> Create Group
+        </button>
+      </div>
+
+      <div class="groups-grid" id="groups-grid">
+        <!-- Dynamically populated -->
+        <div class="empty-state" id="empty-groups">
+          <div class="empty-state-icon">📂</div>
+          <h3>No groups yet</h3>
+          <p>Create your first group to start splitting expenses.</p>
+          <button class="btn btn-primary" id="btn-empty-create-group">+ Create Group</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: CREATE GROUP
+       ═══════════════════════════════════════════ -->
+  <main class="page create-group-page" id="page-create-group">
+    <div class="container">
+      <div class="page-header">
+        <button class="back-btn" id="back-from-create-group">←</button>
+        <h1>Create New Group</h1>
+      </div>
+      <div class="card" style="cursor:default;">
+        <form id="create-group-form">
+          <div class="form-group">
+            <label for="group-name-input">Group Name</label>
+            <input type="text" class="form-control" id="group-name-input" name="groupName" placeholder="e.g., Goa Trip 2026" required />
+          </div>
+
+          <h3 style="margin-bottom:14px;font-size:1rem;">Members</h3>
+          <div class="member-list" id="member-list">
+            <!-- Dynamically populated -->
+          </div>
+
+          <div class="add-member-row">
+            <input type="text" class="form-control" id="member-name-input" placeholder="Member Name" />
+            <input type="tel" class="form-control" id="member-phone-input" placeholder="Mobile Number (e.g. 9876543210)" />
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-add-member">Add</button>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 10px;">
+            Create Group & Send WhatsApp Invites
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: GROUP DETAIL
+       ═══════════════════════════════════════════ -->
+  <main class="page" id="page-group-detail">
+    <div class="container">
+      <div class="group-detail-header">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <button class="back-btn" id="back-from-group-detail">←</button>
+          <h1 id="group-detail-name">Group Name</h1>
+        </div>
+        <div class="group-actions">
+          <button class="btn btn-primary btn-sm" id="btn-add-expense">+ Add Expense</button>
+          <button class="btn btn-secondary btn-sm" id="btn-split-pay">⚡ Split & Pay</button>
+        </div>
+      </div>
+
+      <!-- Balance Summary -->
+      <div class="balance-cards" id="balance-cards">
+        <div class="balance-card">
+          <div class="amount owe" id="total-owe">₹0</div>
+          <div class="label">You Owe</div>
+        </div>
+        <div class="balance-card">
+          <div class="amount receive" id="total-receive">₹0</div>
+          <div class="label">You Get Back</div>
+        </div>
+        <div class="balance-card">
+          <div class="amount" id="total-spending" style="color:var(--primary);">₹0</div>
+          <div class="label">Total Spending</div>
+        </div>
+      </div>
+
+      <!-- Individual Balances -->
+      <div class="balances-list" id="balances-list">
+        <h2 style="font-size:1.125rem;font-weight:700;margin-bottom:14px;">💰 Individual Balances</h2>
+        <div id="individual-balances">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Spending Chart -->
+      <div class="chart-container" id="spending-chart-container">
+        <h3>📊 Spending Breakdown</h3>
+        <div id="spending-chart">
+          <!-- dynamic bars -->
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="activity-feed" id="activity-feed-section">
+        <h3>🕐 Recent Activity</h3>
+        <div id="activity-feed">
+          <!-- dynamic items -->
+        </div>
+      </div>
+
+      <!-- Expense List -->
+      <div class="expense-list">
+        <h2>🧾 Expenses</h2>
+        <div id="expense-list-items">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: ADD EXPENSE
+       ═══════════════════════════════════════════ -->
+  <main class="page add-expense-page" id="page-add-expense">
+    <div class="container">
+      <div class="page-header">
+        <button class="back-btn" id="back-from-add-expense">←</button>
+        <h1>Add Expense</h1>
+      </div>
+      <div class="card" style="cursor:default;">
+        <form id="add-expense-form">
+          <div class="form-group">
+            <label for="expense-title-input">Expense Title</label>
+            <input type="text" class="form-control" id="expense-title-input" name="title" placeholder="e.g., Dinner at Pizza Palace" required />
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label for="expense-amount-input">Amount</label>
+              <input type="number" class="form-control" id="expense-amount-input" name="amount" placeholder="0.00" step="0.01" min="0" required />
+            </div>
+            <div class="form-group">
+              <label for="expense-currency-select">Currency</label>
+              <select class="form-control" id="expense-currency-select" name="currency">
+                <option value="INR">₹ INR</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="GBP">£ GBP</option>
+                <option value="JPY">¥ JPY</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Currency Conversion Display -->
+          <div class="form-group hidden" id="currency-conversion-display"
+               style="padding:12px 16px;background:rgba(37,99,235,.06);border-radius:var(--radius-md);font-size:.875rem;">
+            <span id="converted-amount-text"></span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label for="expense-paidby-select">Paid By</label>
+              <select class="form-control" id="expense-paidby-select" name="paidBy">
+                <!-- dynamic -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="expense-date-input">Date</label>
+              <input type="date" class="form-control" id="expense-date-input" name="date" required />
+            </div>
+          </div>
+
+          <!-- Split Type -->
+          <label style="font-weight:600;font-size:.875rem;margin-bottom:8px;display:block;">Split Type</label>
+          <div class="split-type-selector" id="split-type-selector">
+            <button type="button" class="split-type-btn active" data-split="equal">Equal</button>
+            <button type="button" class="split-type-btn" data-split="percentage">Percentage</button>
+            <button type="button" class="split-type-btn" data-split="share">Share-based</button>
+            <button type="button" class="split-type-btn" data-split="itemwise">Item-wise</button>
+          </div>
+
+          <!-- Dynamic Split Details -->
+          <div class="split-detail" id="split-detail">
+            <!-- Dynamic based on split type -->
+          </div>
+
+          <!-- Recurring Option -->
+          <label class="recurring-option">
+            <input type="checkbox" id="expense-recurring" name="recurring" />
+            <span>🔁 Repeat Monthly</span>
+          </label>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;">Add Expense</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: MEMBER DASHBOARD
+       ═══════════════════════════════════════════ -->
+  <main class="page member-dashboard" id="page-member-dashboard">
+    <div class="container">
+      <div class="page-header">
+        <button class="back-btn" id="back-from-member-dashboard">←</button>
+        <h1>My Dashboard</h1>
+      </div>
+
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="icon">💸</div>
+          <div class="value text-danger" id="dash-total-owe">₹0</div>
+          <div class="label">Total You Owe</div>
+        </div>
+        <div class="summary-card">
+          <div class="icon">💰</div>
+          <div class="value text-success" id="dash-total-receive">₹0</div>
+          <div class="label">Total You Get</div>
+        </div>
+        <div class="summary-card">
+          <div class="icon">📊</div>
+          <div class="value" style="color:var(--primary);" id="dash-net-balance">₹0</div>
+          <div class="label">Net Balance</div>
+        </div>
+      </div>
+
+      <div class="card" style="cursor:default;">
+        <h3 style="margin-bottom:16px;">Balances Across All Groups</h3>
+        <div id="dash-all-balances">
+          <!-- Dynamic -->
+          <p class="text-muted" style="text-align:center;padding:20px;">No balances to show yet.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL: LOGIN
+       ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal">
+      <button class="modal-close" id="login-modal-close">✕</button>
+      <h2>Welcome back</h2>
+      <p class="modal-subtitle">Sign in to your Splitzo account</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" class="form-control" id="login-email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" class="form-control" id="login-password" name="password" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Login</button>
+      </form>
+      <div class="modal-footer">
+        Don't have an account? <a id="switch-to-register">Register</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL: REGISTER
+       ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="register-modal">
+    <div class="modal">
+      <button class="modal-close" id="register-modal-close">✕</button>
+      <h2>Create account</h2>
+      <p class="modal-subtitle">Sign up to start splitting expenses</p>
+      <form id="register-form">
+        <div class="form-group">
+          <label for="register-name">Full Name</label>
+          <input type="text" class="form-control" id="register-name" name="name" placeholder="John Doe" required />
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input type="email" class="form-control" id="register-email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input type="password" class="form-control" id="register-password" name="password" placeholder="Create a password" required minlength="6" />
+        </div>
+        <div class="form-group">
+          <label for="register-confirm-password">Confirm Password</label>
+          <input type="password" class="form-control" id="register-confirm-password" name="confirmPassword" placeholder="Confirm your password" required minlength="6" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Register</button>
+      </form>
+      <div class="modal-footer">
+        Already have an account? <a id="switch-to-login">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL: SPLIT & PAY
+       ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="split-pay-modal">
+    <div class="modal">
+      <button class="modal-close" id="split-pay-close">✕</button>
+      <h2>⚡ Optimized Settlements</h2>
+      <p class="modal-subtitle">Minimum transactions needed to settle all debts</p>
+      <div class="split-pay-results" id="split-pay-results">
+        <!-- Dynamic -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ SCRIPTS ═══════════════════════════ -->
+  <!-- Firebase CDN (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
